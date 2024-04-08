@@ -1,0 +1,60 @@
+---
+title: "Exploratory Analysis"
+author: Hailey Quintavalle
+format: html
+---
+
+
+```{r message = F}
+library(tidyverse)
+initial_data <- read_csv("data/mxmh_survey_results.csv")
+head(initial_data)
+```
+
+### Cleaning up some variable names
+
+```{r}
+data <- initial_data |> rename(primary_streaming_service = `Primary streaming service`,
+               hours_per_day = `Hours per day`,
+               while_working = `While working`,
+               fav_genre = `Fav genre`,
+               foreign_languages = `Foreign languages`,
+               music_effects = `Music effects`,
+               Classical = `Frequency [Classical]`,
+               Country = `Frequency [Country]`,
+               EDM = `Frequency [EDM]`,
+               Folk = `Frequency [Folk]`,
+               Gospel = `Frequency [Gospel]`,
+               Hip_hop = `Frequency [Hip hop]`,
+               Jazz = `Frequency [Jazz]`,
+               K_pop = `Frequency [K pop]`,
+               Latin = `Frequency [Latin]`,
+               Lofi = `Frequency [Lofi]`,
+               Metal = `Frequency [Metal]`,
+               Pop = `Frequency [Pop]`,
+               R_B = `Frequency [R&B]`,
+               Rap = `Frequency [Rap]`,
+               Rock = `Frequency [Rock]`,
+               Video_game_music = `Frequency [Video game music]`) |>
+  select(-Permissions)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
