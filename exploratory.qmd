@@ -39,14 +39,62 @@ data <- initial_data |> rename(primary_streaming_service = `Primary streaming se
   select(-Permissions)
 ```
 
+### Exploring Mental Health variables
+
+```{r}
+ggplot(data = data, aes(x = Anxiety)) +
+  geom_histogram()
+```
+
+```{r}
+ggplot(data = data, aes(x = Insomnia)) +
+  geom_histogram()
+```
+
+
+```{r}
+ggplot(data = data, aes(x = Depression)) +
+  geom_histogram()
+```
+
+```{r}
+ggplot(data = data, aes(x = OCD)) +
+  geom_histogram()
+```
+
+*possible question - which musical genres seem to `help` the most for different health disorders?
 
 
 
 
+### Look into demographic around music
 
+```{r}
+data |> group_by(primary_streaming_service) |> summarise(round(mean(Age)))
+```
 
+```{r}
+ggplot(data = data, aes(x = primary_streaming_service, y = Age)) +
+  geom_boxplot() +
+  coord_flip()
+```
 
+```{r}
+ggplot(data = data, aes(x = fav_genre, y = Age)) +
+  geom_boxplot() +
+  coord_flip()
+```
 
+```{r}
+ggplot(data = data, aes(x = hours_per_day, y = Age)) +
+  geom_point()
+```
+
+```{r}
+ggplot(data = data, aes(x = while_working, y = Age)) +
+  geom_boxplot() +
+  coord_flip()
+```
 
 
 
