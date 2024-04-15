@@ -51,7 +51,7 @@ library(tidyverse)
 initial_data <- read_csv("data/mxmh_survey_results.csv")
 ```
 
-### Cleaning up some variable names
+## Cleaning data
 
 ```{r}
 data <- initial_data |> rename(primary_streaming_service = `Primary streaming service`,
@@ -76,10 +76,133 @@ data <- initial_data |> rename(primary_streaming_service = `Primary streaming se
                Rap = `Frequency [Rap]`,
                Rock = `Frequency [Rock]`,
                Video_game_music = `Frequency [Video game music]`) |>
-  select(-Permissions)
+  select(-Permissions) |> 
+  mutate(music_improve = recode(music_effects, 
+                                'Improve'= '1', 
+                                'No effect'='0', 
+                                'Worsen' = '-1')) |>
+  mutate(music_improve = as.numeric(music_improve))
 ```
 
-### Exploring Mental Health variables
+### Recode music effects variable into numeric values
+
+**should recode all music genre variables into numeric variables 
+
+```{r}
+new_data <- data |> 
+  mutate(Classical = recode(Classical, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Country = recode(Country, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(EDM = recode(EDM, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Folk = recode(Folk, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Gospel = recode(Gospel, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Hip_hop = recode(Hip_hop, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Jazz = recode(Jazz, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(K_pop = recode(K_pop, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Latin = recode(Latin, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Lofi = recode(Lofi, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Metal = recode(Metal, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Pop = recode(Pop, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(R_B = recode(R_B, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Rap = recode(Rap, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Rock = recode(Rock, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |>
+  mutate(Video_game_music = recode(Video_game_music, 
+                            'Never'='1', 
+                            'Rarely'='2', 
+                            'Sometimes' = '3', 
+                            'Very frequently' = '4')) |> 
+  mutate(Classical = as.numeric(Classical),
+         Country = as.numeric(Country),
+         EDM = as.numeric(EDM),
+         Folk = as.numeric(Folk),
+         Gospel = as.numeric(Gospel),
+         Hip_hop = as.numeric(Hip_hop),
+         Jazz = as.numeric(Jazz),
+         K_pop = as.numeric(K_pop),
+         Latin = as.numeric(Latin),
+         Lofi = as.numeric(Lofi),
+         Metal = as.numeric(Metal),
+         Pop = as.numeric(Pop),
+         R_B = as.numeric(R_B),
+         Rap = as.numeric(Rap),
+         Rock = as.numeric(Rock),
+         Video_game_music = as.numeric(Video_game_music))
+  
+```
+
+
+
+## Brainstorm research questions
+
+Possible questions:
+
+- **Primary Question:** Which musical genres seem to `help` the most for different health disorders?
+
+- Which musical genres seem to worsen effects for each disorder? 
+
+- 
+
+
+## Exploring Mental Health variables
 
 ```{r}
 ggplot(data = data, aes(x = Anxiety)) +
@@ -104,7 +227,7 @@ ggplot(data = data, aes(x = OCD)) +
 
 
 
-### Look into demographic around music
+## Look into demographic around music
 
 ```{r}
 data |> group_by(primary_streaming_service) |> summarise(round(mean(Age)))
@@ -134,52 +257,86 @@ ggplot(data = data, aes(x = while_working, y = Age)) +
   coord_flip()
 ```
 
-## Recode music effects variable into numeric values
 
-**should recode all music genre variables into numeric variables 
+## Modeling genres with Mental Health Disorders --> Does modeling make sense here? 
 
 ```{r}
-data |> mutate(music_effects1 = if_else(music_effects == "Improve", 1, 0))
+mod_anxiety <- lm(Anxiety ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = new_data)
+summary(mod_anxiety)
 ```
 
-
-## Brainstorm ideas
-
-Possible questions:
-
-- **Primary Question:** which musical genres seem to `help` the most for different health disorders?
-
-- 
-
-## Hours listening per day and mental health
-
 ```{r}
-mod_1 <- lm(hours_per_day ~ Anxiety + Depression + OCD + Insomnia, data = data)
-summary(mod_1)
+mod_depression <- lm(Depression ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = new_data)
+summary(mod_depression)
 ```
 
-## Modeling genre with Anxiety
+```{r}
+mod_insomnia <- lm(Insomnia ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = new_data)
+summary(mod_insomnia)
+```
 
 ```{r}
-mod_a <- glm(Anxiety ~ Classical, data = data)
+mod_ocd <- lm(OCD ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = new_data)
+summary(mod_ocd)
+```
+
+### Do certain genres improve mental health? 
+
+```{r}
+mod_a <- lm(music_improve ~ Age + Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = new_data)
 summary(mod_a)
 ```
 
 
+```{r}
+mod_rb <- lm(music_improve ~ Age + R_B, data = data)
+summary(mod_rb)
+```
+
+
+## Visualizing Genres with each disorder
+
+Visualization ideas: 
+
+- separate plot for each disorder --> **disorder is a numerical scale --> how to categorize? 
+
+- top genres that seem to improve mental health for each disorder
+
+boxplot/[or bar graph?] faceted by disorder, y-axis represents improvement (music_effects), x-axis represents top genres (categories) 
+
+plan: filter by those who said they felt symptoms of [anxiety] AND said that music had improved their mental health --> then find which genres that group listens to the most 
+
+--> shiny app ideas: 
+
+- choose disorder from select input 
+
+- choose how many genres you want to see on plot with slider?
+
+- for each disorder, top genres in plot change accordingly 
+
+- top genre is highlighted somehow? (maybe)
+
+- IF possible: change improvement option from Improve to Worsen with radio buttons - observe the opposite effects
 
 
 
+```{r}
+new_data |> mutate(anxiety = if_else(Anxiety >= 5, 1, 0),  ## using 5 as teh cut off point for now
+               depression = if_else(Depression >= 5, 1, 0),
+               insomnia = if_else(Insomnia >= 5, 1, 0),
+               ocd = if_else(OCD >= 5, 1, 0)) |>
+  filter(anxiety == 1, music_improve == 1)## |> pivot_longer(Classical, names_to = "genres", values_to = "count")
+```
 
 
+### Boxplot showing improvement with each disorder
 
+improve, no effect, and worsen on the x-axis, count on the y, colored by disorder (need indicator variable for disorder)
 
-
-
-
-
-
-
-
+```{r}
+ggplot(data = drop_na(new_data), aes(x = music_effects, y = Anxiety)) +
+  geom_boxplot()
+```
 
 
 
