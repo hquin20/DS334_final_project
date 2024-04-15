@@ -4,11 +4,51 @@ author: Hailey Quintavalle
 format: html
 ---
 
+data source: <https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download>
+
+
+About the data: 
+
+- Timestamp: date and time when form was submitted
+
+- Age
+
+- Primary streaming service
+
+- Hours per day: number of hours listened to music per day
+
+- While working: does the respondent listen to music while studying/working? 
+
+- Instrumentalist: Does the respondent play an instrument regularly? 
+
+- Composer: Does the respondent compose music? 
+
+- Fav genre: favorite or top genre
+
+- Exploratory: Does the respondent actively explore new artists/genres?
+
+- Foreign languages: Does the respondent listen to music with lyrics in a language they are not fluent in?
+
+- BPM: beats per minute of favorite genre 
+
+- Frequency [Classical]: How frequently the respondent listens to classical music
+
+...
+
+- Anxiety: Self-reported anxiety on a scale of 0-10
+
+- Depression: Self-reported depression, on a scale of 0-10
+
+- Insomnia: self-reported insomnia, scale of 0-10
+
+- OCD: self-reported obsessive compulsive disorder, 0-10
+
+- Music effects: does music improve/worsen mental health conditions? 
+
 
 ```{r message = F}
 library(tidyverse)
 initial_data <- read_csv("data/mxmh_survey_results.csv")
-head(initial_data)
 ```
 
 ### Cleaning up some variable names
@@ -43,27 +83,24 @@ data <- initial_data |> rename(primary_streaming_service = `Primary streaming se
 
 ```{r}
 ggplot(data = data, aes(x = Anxiety)) +
-  geom_histogram()
+  geom_histogram(fill = "orange")
 ```
 
 ```{r}
 ggplot(data = data, aes(x = Insomnia)) +
-  geom_histogram()
+  geom_histogram(fill = "purple4")
 ```
 
 
 ```{r}
 ggplot(data = data, aes(x = Depression)) +
-  geom_histogram()
+  geom_histogram(fill = "green4")
 ```
 
 ```{r}
 ggplot(data = data, aes(x = OCD)) +
-  geom_histogram()
+  geom_histogram(fill = "pink")
 ```
-
-*possible question - which musical genres seem to `help` the most for different health disorders?
-
 
 
 
@@ -74,9 +111,10 @@ data |> group_by(primary_streaming_service) |> summarise(round(mean(Age)))
 ```
 
 ```{r}
-ggplot(data = data, aes(x = primary_streaming_service, y = Age)) +
+ggplot(data = data, aes(x = primary_streaming_service, y = Age, color = primary_streaming_service)) +
   geom_boxplot() +
-  coord_flip()
+  coord_flip() +
+  theme(legend.position = "none")
 ```
 
 ```{r}
@@ -95,6 +133,47 @@ ggplot(data = data, aes(x = while_working, y = Age)) +
   geom_boxplot() +
   coord_flip()
 ```
+
+## Recode music effects variable into numeric values
+
+**should recode all music genre variables into numeric variables 
+
+```{r}
+data |> mutate(music_effects1 = if_else(music_effects == "Improve", 1, 0))
+```
+
+
+## Brainstorm ideas
+
+Possible questions:
+
+- **Primary Question:** which musical genres seem to `help` the most for different health disorders?
+
+- 
+
+## Hours listening per day and mental health
+
+```{r}
+mod_1 <- lm(hours_per_day ~ Anxiety + Depression + OCD + Insomnia, data = data)
+summary(mod_1)
+```
+
+## Modeling genre with Anxiety
+
+```{r}
+mod_a <- glm(Anxiety ~ Classical, data = data)
+summary(mod_a)
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
