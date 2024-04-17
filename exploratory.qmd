@@ -195,7 +195,7 @@ new_data <- data |>
 
 Possible questions:
 
-- **Primary Question:** Which musical genres seem to `help` the most for different health disorders?
+- **Primary Question:** Which musical genres seem to `help` the most for different health disorders? 
 
 - Which musical genres seem to worsen effects for each disorder? 
 
@@ -321,22 +321,33 @@ plan: filter by those who said they felt symptoms of [anxiety] AND said that mus
 
 
 ```{r}
-new_data |> mutate(anxiety = if_else(Anxiety >= 5, 1, 0),  ## using 5 as teh cut off point for now
-               depression = if_else(Depression >= 5, 1, 0),
-               insomnia = if_else(Insomnia >= 5, 1, 0),
-               ocd = if_else(OCD >= 5, 1, 0)) |>
-  filter(anxiety == 1, music_improve == 1)## |> pivot_longer(Classical, names_to = "genres", values_to = "count")
+new_data |> mutate(anxiety = if_else(Anxiety >= 1, 1, 0),  ## anyone who shows any symptoms 
+                   depression = if_else(Depression >= 5, 1, 0),
+                   insomnia = if_else(Insomnia >= 5, 1, 0),
+                   ocd = if_else(OCD >= 5, 1, 0)) |>
+  pivot_longer(c(anxiety, depression, insomnia, ocd), 
+               names_to = "disorder", 
+               values_to = "symptoms_present") |>
+  drop_na() |>
+  filter(symptoms_present == 1) |>
+ # group_by(disorder, music_effects) |>
+ # summarise(n = n()) |>
+  ggplot(aes(x = music_effects, y = Anxiety)) +  ## figure out how to make this a count
+  geom_boxplot(aes(fill = disorder)) +
+  theme_minimal()
 ```
 
 
 ### Boxplot showing improvement with each disorder
 
-improve, no effect, and worsen on the x-axis, count on the y, colored by disorder (need indicator variable for disorder)
+improve, no effect, and worsen on the x-axis, count on the y, colored by disorder (need indicator variable for disorder) 
 
 ```{r}
-ggplot(data = drop_na(new_data), aes(x = music_effects, y = Anxiety)) +
-  geom_boxplot()
+ggplot(data = drop_na(data), aes(x = music_effects, y = Anxiety)) + 
+  geom_boxplot() 
 ```
+
+
 
 
 
