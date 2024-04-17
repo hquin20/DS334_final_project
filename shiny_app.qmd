@@ -1,57 +1,14 @@
 ---
-title: "Exploratory Analysis"
-author: Hailey Quintavalle
+title: "Shiny App"
+author: "Hailey Quintavalle"
 format: html
 ---
-
-data source: <https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download>
-
-
-About the data: 
-
-- Timestamp: date and time when form was submitted
-
-- Age
-
-- Primary streaming service
-
-- Hours per day: number of hours listened to music per day
-
-- While working: does the respondent listen to music while studying/working? 
-
-- Instrumentalist: Does the respondent play an instrument regularly? 
-
-- Composer: Does the respondent compose music? 
-
-- Fav genre: favorite or top genre
-
-- Exploratory: Does the respondent actively explore new artists/genres?
-
-- Foreign languages: Does the respondent listen to music with lyrics in a language they are not fluent in?
-
-- BPM: beats per minute of favorite genre 
-
-- Frequency [Classical]: How frequently the respondent listens to classical music
-
-...
-
-- Anxiety: Self-reported anxiety on a scale of 0-10
-
-- Depression: Self-reported depression, on a scale of 0-10
-
-- Insomnia: self-reported insomnia, scale of 0-10
-
-- OCD: self-reported obsessive compulsive disorder, 0-10
-
-- Music effects: does music improve/worsen mental health conditions? 
 
 
 ```{r message = F}
 library(tidyverse)
 initial_data <- read_csv("data/mxmh_survey_results.csv")
 ```
-
-## Cleaning data
 
 ```{r}
 wrangled_data <- initial_data |> rename(primary_streaming_service = `Primary streaming service`,
@@ -83,10 +40,6 @@ wrangled_data <- initial_data |> rename(primary_streaming_service = `Primary str
                                 'Worsen' = '-1')) |>
   mutate(music_improve = as.numeric(music_improve))
 ```
-
-### Recode music effects variable into numeric values
-
-**should recode all music genre variables into numeric variables 
 
 ```{r}
 numeric_music <- wrangled_data |> 
@@ -189,119 +142,6 @@ numeric_music <- wrangled_data |>
   
 ```
 
-
-
-## Brainstorm research questions
-
-Possible questions:
-
-- **Primary Question:** Which musical genres seem to `help` the most for different health disorders? 
-
-- Which musical genres seem to worsen effects for each disorder? 
-
-- 
-
-
-## Exploring Mental Health variables
-
-```{r}
-ggplot(data = wrangled_data, aes(x = Anxiety)) +
-  geom_histogram(fill = "orange")
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = Insomnia)) +
-  geom_histogram(fill = "purple4")
-```
-
-
-```{r}
-ggplot(data = wrangled_data, aes(x = Depression)) +
-  geom_histogram(fill = "green4")
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = OCD)) +
-  geom_histogram(fill = "pink")
-```
-
-
-
-## Look into demographic around music
-
-```{r}
-wrangled_data |> group_by(primary_streaming_service) |> summarise(round(mean(Age)))
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = primary_streaming_service, y = Age, color = primary_streaming_service)) +
-  geom_boxplot() +
-  coord_flip() +
-  theme(legend.position = "none")
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = fav_genre, y = Age)) +
-  geom_boxplot() +
-  coord_flip()
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = hours_per_day, y = Age)) +
-  geom_point()
-```
-
-```{r}
-ggplot(data = wrangled_data, aes(x = while_working, y = Age)) +
-  geom_boxplot() +
-  coord_flip()
-```
-
-
-## Modeling genres with Mental Health Disorders --> Does modeling make sense here? 
-
-```{r}
-## Anxiety
-summary(lm(Anxiety ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = numeric_music))
-```
-
-```{r}
-## Depression
-summary(lm(Depression ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = numeric_music))
-```
-
-```{r}
-## Insomnia
-summary(lm(Insomnia ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = numeric_music))
-```
-
-```{r}
-## OCD
-summary(lm(OCD ~ Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = numeric_music))
-```
-
-### Do certain genres improve mental health? 
-
-```{r}
-summary(lm(music_improve ~ Age + Classical + Country + EDM + Folk + Gospel + Hip_hop + Jazz + K_pop + Latin + Lofi + Metal + Pop + R_B + Rap + Rock + Video_game_music, data = numeric_music))
-```
-
-
-```{r}
-summary(lm(music_improve ~ Age + R_B, data = wrangled_data))
-```
-
-
-## Visualizing Genres with each disorder
-
-Visualization ideas: 
-
-- separate plot for each disorder --> **disorder is a numerical scale --> how to categorize? 
-
-- top genres that seem to improve mental health for each disorder
-
-boxplot/[or bar graph?] faceted by disorder, y-axis represents improvement (music_effects), x-axis represents top genres (categories) 
-
 plan: filter by those who said they felt symptoms of [anxiety] AND said that music had improved their mental health --> then find which genres that group listens to the most 
 
 --> shiny app ideas: 
@@ -319,38 +159,27 @@ plan: filter by those who said they felt symptoms of [anxiety] AND said that mus
 - IF possible: change improvement option from Improve to Worsen with radio buttons - observe the opposite effects
 
 
-
 ```{r}
-numeric_music |> mutate(anxiety = if_else(Anxiety >= 1, 1, 0),  ## anyone who shows any symptoms 
-                   depression = if_else(Depression >= 5, 1, 0),
-                   insomnia = if_else(Insomnia >= 5, 1, 0),
-                   ocd = if_else(OCD >= 5, 1, 0)) |>
-  pivot_longer(c(anxiety, depression, insomnia, ocd), 
-               names_to = "disorder", 
-               values_to = "symptoms_present") |>
-  drop_na() |>
-  filter(symptoms_present == 1) |>
-  # group_by(disorder, music_effects) |>
-  # summarise(n = n()) |>
-  ggplot(aes(x = music_effects, y = Anxiety)) +  ## figure out how to make this a count
-  geom_boxplot(aes(fill = disorder)) +
-  theme_minimal()
-```
+library(shiny)
 
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("sel_disorder",
+                  "Select Disorder",
+                  choices = c("Anxiety", "Depression", "Insomnia", "ODC"))
+    ),
+    mainPanel(
+      plotOutput("genres_plot")
+    )
+  )
+  
+)
 
-### Boxplot showing improvement with each disorder
-
-improve, no effect, and worsen on the x-axis, count on the y, colored by disorder (need indicator variable for disorder) 
-
-```{r}
-ggplot(data = drop_na(wrangled_data), aes(x = music_effects, y = hours_per_day)) + 
-  geom_boxplot() 
-```
-
-### Need to wrangle data so that there is one column for genre - first need to create indicator variables for each genre
-
-```{r, warning = F, message = F}
-numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
+server <- function(input, output, session) {
+  
+   data_react <- reactive({
+     numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
                         Country = if_else(Country >= 3, 1, 0),
                         EDM = if_else(EDM >= 3, 1, 0),
                         Folk = if_else(Folk >= 3, 1, 0),
@@ -370,39 +199,24 @@ numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if so
                  'K Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game Music'),
                names_to = "genres", 
                values_to = "genre_listen") |> 
-  filter(genre_listen == 1,                 ## must show at least one symptom
+  filter(genre_listen == 1,                    ## must show at least one symptom
          music_effects == "Improve",
          Anxiety > 0) |>
   group_by(genres) |>
-  summarise(n = n()) |>
+  summarise(n = n())
+   })
+   
   
-  ggplot(aes(x = fct_reorder(genres, n), y = n)) +
-  geom_col() +
-  coord_flip()
+  output$genres_plot <- renderPlot({
+    ggplot(data = data_react(), aes(x = fct_reorder(genres, n), y = n)) +
+      geom_col() +
+      coord_flip()
+    
+  })
+}
 
-
-## Number of people who show at least one symptom of the disorder
-## who listen to that genre sometimes or very frequently 
-
-## so... 
+shinyApp(ui, server)
 ```
-
-Classical, 
-'Never'='1', 
-'Rarely'='2', 
-'Sometimes' = '3', 
-'Very frequently' = '4')) 
-
-
-
-
-
-
-
-
-
-
-
 
 
 
