@@ -166,20 +166,72 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("sel_disorder",
-                  "Select Disorder",
-                  choices = c("Anxiety", "Depression", "Insomnia", "ODC"))
+                  "Select Symptoms",
+                  choices = c("Anxiety", "Depression", "Insomnia", "ODC")),
+       sliderInput("n_symptoms", 
+                  "Number of Reported Symptoms",
+                  1, 10, 5),
+      sliderInput("top_n", 
+                  "Number of Genres",
+                  1, 16, 8),
+      radioButtons("sel_improve", 
+                   "Improve or Worsen?",
+                   c("Improve", "Worsen", "No effect"))
     ),
     mainPanel(
       plotOutput("genres_plot")
     )
   )
-  
+    
 )
 
 server <- function(input, output, session) {
   
    data_react <- reactive({
-     numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
+       numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
+                        Country = if_else(Country >= 3, 1, 0),
+                        EDM = if_else(EDM >= 3, 1, 0),
+                        Folk = if_else(Folk >= 3, 1, 0),
+                        Gospel = if_else(Gospel >= 3, 1, 0),
+                        'Hip Hop' = if_else(Hip_hop >= 3, 1, 0),
+                        Jazz = if_else(Jazz >= 3, 1, 0),
+                        'K Pop' = if_else(K_pop >= 3, 1, 0),
+                        Latin = if_else(Latin >= 3, 1, 0),
+                        Lofi = if_else(Lofi >= 3, 1, 0),
+                        Metal = if_else(Metal >= 3, 1, 0),
+                        Pop = if_else(Pop >= 3, 1, 0),
+                       `R&B` = if_else(R_B >= 3, 1, 0),
+                        Rap = if_else(Rap >= 3, 1, 0),
+                        Rock = if_else(Rock >= 3, 1, 0),
+                        'Video Game Music' = if_else(Video_game_music >= 3, 1, 0)) |>
+  pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                 'K Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game Music'),
+               names_to = "genres", 
+               values_to = "genre_listen") |> 
+  filter(genre_listen == 1,                    ## must show at least one symptom
+         music_effects == input$sel_improve,
+         Anxiety > input$n_symptoms) |>  ## must create indicator variable for disorders --> filter by that
+  group_by(genres) |>
+  summarise(n = n()) |>
+  top_n(input$top_n, wt = n)
+   })
+
+
+  output$genres_plot <- renderPlot({
+    ggplot(data = data_react(), aes(x = fct_reorder(genres, n), y = n)) +
+      geom_col() +  ## should i do proportions instead? 
+      coord_flip() +
+      labs(x = "Genres")
+  })
+
+}
+
+shinyApp(ui, server)
+```
+
+
+```{r}
+ numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
                         Country = if_else(Country >= 3, 1, 0),
                         EDM = if_else(EDM >= 3, 1, 0),
                         Folk = if_else(Folk >= 3, 1, 0),
@@ -201,26 +253,45 @@ server <- function(input, output, session) {
                values_to = "genre_listen") |> 
   filter(genre_listen == 1,                    ## must show at least one symptom
          music_effects == "Improve",
-         Anxiety > 0) |>
-  group_by(genres) |>
-  summarise(n = n())
-   })
-   
-  
-  output$genres_plot <- renderPlot({
-    ggplot(data = data_react(), aes(x = fct_reorder(genres, n), y = n)) +
-      geom_col() +
-      coord_flip()
+         Anxiety == 10) |> 
+  group_by(genres) |> 
+  summarise(n = n()) |> 
+  top_n(5, wt = n) |> 
+    ggplot(aes(x = genres, y = n)) + 
+      geom_col() + 
+      coord_flip() 
     
-  })
-}
-
-shinyApp(ui, server)
 ```
 
 
-
-
+```{r}
+ numeric_music |> mutate(Classical = if_else(Classical >= 3, 1, 0), ## only if sometimes or frequently 
+                        Country = if_else(Country >= 3, 1, 0),
+                        EDM = if_else(EDM >= 3, 1, 0),
+                        Folk = if_else(Folk >= 3, 1, 0),
+                        Gospel = if_else(Gospel >= 3, 1, 0),
+                        'Hip Hop' = if_else(Hip_hop >= 3, 1, 0),
+                        Jazz = if_else(Jazz >= 3, 1, 0),
+                        'K Pop' = if_else(K_pop >= 3, 1, 0),
+                        Latin = if_else(Latin >= 3, 1, 0),
+                        Lofi = if_else(Lofi >= 3, 1, 0),
+                        Metal = if_else(Metal >= 3, 1, 0),
+                        Pop = if_else(Pop >= 3, 1, 0),
+                       `R&B` = if_else(R_B >= 3, 1, 0),
+                        Rap = if_else(Rap >= 3, 1, 0),
+                        Rock = if_else(Rock >= 3, 1, 0),
+                        'Video Game Music' = if_else(Video_game_music >= 3, 1, 0)) |>
+  pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz,
+                 'K Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game Music'),
+               names_to = "genres", 
+               values_to = "genre_listen") |> 
+  filter(genre_listen == 1,                    ## must show at least one symptom
+         music_effects == "Improve",
+         Depression == 6) |>  ## this wont work??
+  group_by(genres) |> 
+  summarise(n = n()) |> 
+  top_n(5, wt = n) 
+```
 
 
 
