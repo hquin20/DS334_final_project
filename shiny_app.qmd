@@ -22,17 +22,17 @@ wrangled_data <- initial_data |> rename(primary_streaming_service = `Primary str
                EDM = `Frequency [EDM]`,
                Folk = `Frequency [Folk]`,
                Gospel = `Frequency [Gospel]`,
-               Hip_hop = `Frequency [Hip hop]`,
+               `Hip Hop` = `Frequency [Hip hop]`,
                Jazz = `Frequency [Jazz]`,
-               K_pop = `Frequency [K pop]`,
+               `K-Pop` = `Frequency [K pop]`,
                Latin = `Frequency [Latin]`,
                Lofi = `Frequency [Lofi]`,
                Metal = `Frequency [Metal]`,
                Pop = `Frequency [Pop]`,
-               R_B = `Frequency [R&B]`,
+               `R&B` = `Frequency [R&B]`,
                Rap = `Frequency [Rap]`,
                Rock = `Frequency [Rock]`,
-               Video_game_music = `Frequency [Video game music]`) |>
+               `Video Game` = `Frequency [Video game music]`) |>
   select(-Permissions) |> 
   mutate(music_improve = recode(music_effects, 
                                 'Improve'= '1', 
@@ -68,7 +68,7 @@ numeric_music <- wrangled_data |>
                             'Rarely'='2', 
                             'Sometimes' = '3', 
                             'Very frequently' = '4')) |>
-  mutate(Hip_hop = recode(Hip_hop, 
+  mutate(`Hip Hop` = recode(`Hip Hop`, 
                             'Never'='1', 
                             'Rarely'='2', 
                             'Sometimes' = '3', 
@@ -78,7 +78,7 @@ numeric_music <- wrangled_data |>
                             'Rarely'='2', 
                             'Sometimes' = '3', 
                             'Very frequently' = '4')) |>
-  mutate(K_pop = recode(K_pop, 
+  mutate(`K-Pop` = recode(`K-Pop`, 
                             'Never'='1', 
                             'Rarely'='2', 
                             'Sometimes' = '3', 
@@ -103,7 +103,7 @@ numeric_music <- wrangled_data |>
                             'Rarely'='2', 
                             'Sometimes' = '3', 
                             'Very frequently' = '4')) |>
-  mutate(R_B = recode(R_B, 
+  mutate(`R&B` = recode(`R&B`, 
                             'Never'='1', 
                             'Rarely'='2', 
                             'Sometimes' = '3', 
@@ -118,7 +118,7 @@ numeric_music <- wrangled_data |>
                             'Rarely'='2', 
                             'Sometimes' = '3', 
                             'Very frequently' = '4')) |>
-  mutate(Video_game_music = recode(Video_game_music, 
+  mutate(`Video Game` = recode(`Video Game`, 
                             'Never'='1', 
                             'Rarely'='2', 
                             'Sometimes' = '3', 
@@ -128,17 +128,17 @@ numeric_music <- wrangled_data |>
          EDM = as.numeric(EDM),
          Folk = as.numeric(Folk),
          Gospel = as.numeric(Gospel),
-         Hip_hop = as.numeric(Hip_hop),
+         `Hip Hop` = as.numeric(`Hip Hop`),
          Jazz = as.numeric(Jazz),
-         K_pop = as.numeric(K_pop),
+         `K-Pop` = as.numeric(`K-Pop`),
          Latin = as.numeric(Latin),
          Lofi = as.numeric(Lofi),
          Metal = as.numeric(Metal),
          Pop = as.numeric(Pop),
-         R_B = as.numeric(R_B),
+         `R&B` = as.numeric(`R&B`),
          Rap = as.numeric(Rap),
          Rock = as.numeric(Rock),
-         Video_game_music = as.numeric(Video_game_music))
+         `Video Game` = as.numeric(`Video Game`))
   
 ```
 
@@ -168,20 +168,18 @@ ui <- fluidPage(
       selectInput("sel_disorder",
                   "Select Symptoms",
                   choices = c("Anxiety", "Depression", "Insomnia", "OCD")),
-  ##    sliderInput("sel_symptoms", 
-   ##               "Number of Reported Symptoms",
-   ##               1, 10, 5),
+      sliderInput("sel_symptoms", 
+                  "Minimum Number of Reported Symptoms",
+                  1, 10, 5),
       selectInput("sel_genre", 
                   "Select Genre",
-                  c("Classical", "Country", "EDM", "Folk", "Gospel", "Hip_hop", 
-                    "Jazz", 'K_pop', "Latin", "Lofi", "Metal", "Pop", 'R_B', "Rap", "Rock",
-                    'Video_game_music')),
-      radioButtons("sel_improve", 
+                  c("Classical", "Country", "EDM", "Folk", "Gospel", "Hip Hop", "Jazz", 'K-Pop', "Latin", "Lofi", "Metal", "Pop", 'R&B', "Rap", "Rock", 'Video Game', 'All')),
+      radioButtons("sel_improve",                                   ## figure out how to do All genres
                    "How has music effected your mental health?",
                    c("Improve", "Worsen", "No effect"))
     ),
     mainPanel(
-      plotOutput("genres_plot")
+      plotlyOutput("genres_plot")
     )
   )
     
@@ -190,8 +188,8 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   data_react <- reactive({
-    wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip_hop`, Jazz, 
-                                    'K_pop', Latin, Lofi, Metal, Pop, 'R_B', Rap, Rock, 'Video_game_music'),
+    wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                    'K-Pop', Latin, Lofi, Metal, Pop, `R&B`, Rap, Rock, `Video Game`),
                                   names_to = "genres", 
                                   values_to = "genre_listen") |>
       pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
@@ -199,16 +197,17 @@ server <- function(input, output, session) {
                    values_to = "n_symptoms") |>
       mutate(n_symptoms = as.numeric(n_symptoms)) |>
       filter(music_effects == input$sel_improve,
-             disorder == input$sel_disorder,
-             genres == input$sel_genre
-  ##        n_symptoms <= input$sel_symptoms
+             disorder == input$sel_disorder,  
+             genres == input$sel_genre,
+             n_symptoms >= input$sel_symptoms
       ) |>
       group_by(genre_listen) |>
       summarise(n = n()) 
   })
   
-  output$genres_plot <- renderPlot({
-    ggplot(data = data_react(), aes(x = genre_listen, y = n)) +
+  output$genres_plot <- renderPlotly({
+    
+    plot <- ggplot(data = data_react(), aes(x = genre_listen, y = n)) +
       geom_col(aes(fill = genre_listen), color = "black", linewidth = 0.8) +
       scale_fill_viridis_d() +
       theme_minimal(base_size = 16) +
@@ -216,6 +215,8 @@ server <- function(input, output, session) {
         axis.title.x = element_text(vjust = -2)) +
       labs(x = glue::glue("How often do you listen to ", input$sel_genre, " Music?"),
            y = "Number of Responses\n")
+   
+     ggplotly(plot, tooltip = "y")
   })
 }
 
@@ -225,8 +226,8 @@ shinyApp(ui, server)
 
 
 ```{r}
-wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip_hop`, Jazz, 
-                 'K_pop', Latin, Lofi, Metal, Pop, 'R_B', Rap, Rock, 'Video_game_music'),
+plot_demo <- wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                 'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
                names_to = "genres", 
                values_to = "genre_listen") |>
   pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
@@ -234,9 +235,9 @@ wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip_hop`
                values_to = "n_symptoms") |>
   mutate(n_symptoms = as.numeric(n_symptoms)) |>
   filter(music_effects == "Improve",
-         disorder == "OCD",
-         genres == "Classical"
-   #      n_symptoms == 2
+         disorder == "Depression",
+         genres == "Classical",
+         n_symptoms >= 7
    ) |>
   group_by(genre_listen) |>
   summarise(n = n())|>
@@ -248,6 +249,8 @@ wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip_hop`
         axis.title.x = element_text(vjust = -1)) +
   labs(x = "How often do you listen to [this genre]?",
        y = "Number of Responses")
+
+ggplotly(plot_demo, tooltip = "y")
 ```
 
 
