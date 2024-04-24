@@ -148,16 +148,13 @@ plan: filter by those who said they felt symptoms of [anxiety] AND said that mus
 
 - choose disorder from select input 
 
-- for each disorder, top genres in plot change accordingly 
-
-- top genre is highlighted somehow? (maybe) 
-
 - slider for number of symptoms someone experiences of that disorder? 
 
-- IF possible: change improvement option from Improve to Worsen with radio buttons - observe the opposite effects
+- change improvement option from Improve to Worsen with radio buttons - observe the opposite effects
 
 
 ```{r}
+library(plotly)
 library(shiny)
 
 ui <- fluidPage(
@@ -174,14 +171,24 @@ ui <- fluidPage(
                   c("Classical", "Country", "EDM", "Folk", "Gospel", "Hip Hop", "Jazz", 'K-Pop', "Latin", "Lofi", "Metal", "Pop", 'R&B', "Rap", "Rock", 'Video Game', 'All')),
       radioButtons("sel_improve",                                   ## figure out how to do All genres
                    "How has music effected your mental health?",
-                   c("Improve", "Worsen", "No effect"))
+                   c("Improve", "Worsen", "No effect")),
+      selectInput("sel_often",
+                  "Select Frequency",
+                  choices = c("Never", "Rarely", "Sometimes", "Very frequently"))
     ),
     mainPanel(
-      plotlyOutput("genres_plot")
+      tabsetPanel(
+        tabPanel("Plot", value = "tab_plot", 
+                 plotlyOutput("genres_plot"),
+                 plotOutput("effects_plot")),
+        tabPanel("Table", value = "tab_table", 
+                 dataTableOutput("sum_table"))
+      )
     )
-  )
     
+  )
 )
+
 
 server <- function(input, output, session) {
   
@@ -197,8 +204,7 @@ server <- function(input, output, session) {
       filter(music_effects == input$sel_improve,
              disorder == input$sel_disorder,  
              genres == input$sel_genre,
-             n_symptoms >= input$sel_symptoms
-      ) |>
+             n_symptoms >= input$sel_symptoms) |>
       group_by(genre_listen) |>
       summarise(n = n()) 
   })
@@ -210,14 +216,49 @@ server <- function(input, output, session) {
       scale_fill_viridis_d() +
       theme_minimal(base_size = 16) +
       theme(legend.position = "none",
-        axis.title.x = element_text(vjust = -2) #,
-     #   title = element_text(size = 12)
+        axis.title.x = element_text(vjust = -2),
+        plot.title = element_text(size = 14)
      ) +
       labs(x = glue::glue("How often do you listen to ", input$sel_genre, " Music?"),
            y = "Number of Responses\n", 
-           title = glue::glue("Reported ", input$sel_disorder, " symptoms and ",input$sel_genre, " Music"))
+           title = glue::glue("Figure 1. Reported ",
+                              input$sel_disorder, " symptoms and ",input$sel_genre, " Music"))
    
      ggplotly(plot, tooltip = "y")
+  })
+  
+  output$effects_plot <- renderPlot({
+    wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
+                              names_to = "genres", 
+                              values_to = "genre_listen") |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+               names_to = "disorder", 
+               values_to = "n_symptoms") |>
+      filter(disorder == input$sel_disorder,  
+             genres == input$sel_genre,
+             n_symptoms >= input$sel_symptoms,
+             genre_listen == input$sel_often)  |>
+      group_by(music_effects) |>
+      summarise(n = n()) |>
+      drop_na() |>
+      mutate(sum = sum(n),
+             prop = round(n / sum, 2)) |>
+      
+      ggplot(aes(x = music_effects, y = prop)) +
+      geom_point(size = 3) +
+      theme_minimal(base_size = 16) +
+      theme(legend.position = "none",
+            axis.title.x = element_text(vjust = -1)) +
+      labs(x = "Music Effect",
+           y = "Proportion",
+           title = glue::glue("\n\nFigure 2. Comparing Effects of Listening to ",
+                              input$sel_genre, " ", 
+                              input$sel_often))
+  })
+  
+  output$sum_table <- renderDataTable({
+    wrangled_data |> select(-Timestamp)
   })
 }
 
@@ -254,8 +295,41 @@ ggplotly(plot_demo, tooltip = "y")
 ```
 
 
+potentially add: line plot that compares worsen to improve to no effect of each: never, some, frequently, etc. 
 
 
+```{r}
+wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
+                              names_to = "genres", 
+                              values_to = "genre_listen") |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+               names_to = "disorder", 
+               values_to = "n_symptoms") |>
+  mutate(n_symptoms = as.numeric(n_symptoms)) |>
+  filter(disorder == "Anxiety",
+         genres == "Classical",
+         n_symptoms >= 7,
+         genre_listen == "Never") |>
+  group_by(music_effects) |>
+  summarise(n = n()) |>
+  drop_na() |>
+  mutate(sum = sum(n),
+         prop = round(n / sum, 2)) |>
+   ggplot(aes(x = music_effects, y = prop)) +
+  geom_point(size = 3) +
+  geom_line() +                         ## connect dots with line 
+  theme_minimal(base_size = 16) +
+  theme(legend.position = "none",
+        axis.title.x = element_text(vjust = -1)) +
+  labs(x = "Music Effect",
+       y = "Proportion")
+```
+
+
+```{r}
+wrangled_data |> select(-Timestamp)
+```
 
 
 
