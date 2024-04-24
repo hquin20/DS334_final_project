@@ -148,8 +148,6 @@ plan: filter by those who said they felt symptoms of [anxiety] AND said that mus
 
 - choose disorder from select input 
 
-- choose how many genres you want to see on plot with slider?
-
 - for each disorder, top genres in plot change accordingly 
 
 - top genre is highlighted somehow? (maybe) 
@@ -212,9 +210,12 @@ server <- function(input, output, session) {
       scale_fill_viridis_d() +
       theme_minimal(base_size = 16) +
       theme(legend.position = "none",
-        axis.title.x = element_text(vjust = -2)) +
+        axis.title.x = element_text(vjust = -2) #,
+     #   title = element_text(size = 12)
+     ) +
       labs(x = glue::glue("How often do you listen to ", input$sel_genre, " Music?"),
-           y = "Number of Responses\n")
+           y = "Number of Responses\n", 
+           title = glue::glue("Reported ", input$sel_disorder, " symptoms and ",input$sel_genre, " Music"))
    
      ggplotly(plot, tooltip = "y")
   })
@@ -237,10 +238,9 @@ plot_demo <- wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gosp
   filter(music_effects == "Improve",
          disorder == "Depression",
          genres == "Classical",
-         n_symptoms >= 7
-   ) |>
+         n_symptoms >= 7) |>
   group_by(genre_listen) |>
-  summarise(n = n())|>
+  summarise(n = n()) |>
   ggplot(aes(x = genre_listen, y = n)) +
   geom_col(aes(fill = genre_listen), color = "black", linewidth = 0.8) +
   scale_fill_viridis_d() +

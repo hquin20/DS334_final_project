@@ -288,7 +288,7 @@ summary(lm(music_improve ~ Age + Classical + Country + EDM + Folk + Gospel + Hip
 
 
 ```{r}
-summary(lm(music_improve ~ Age + R_B, data = wrangled_data))
+summary(lm(music_improve ~ Age + Rock, data = numeric_music))
 ```
 
 
