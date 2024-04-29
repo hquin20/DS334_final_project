@@ -1,19 +1,81 @@
 ---
 title: "Write up"
 author: "Hailey Quintavalle"
-format: pdf
+format: html
 ---
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(pander)
+library(plotly)
+initial_data <- read_csv("data/mxmh_survey_results.csv")
+wrangled_data <- initial_data |> rename(primary_streaming_service = `Primary streaming service`,
+               hours_per_day = `Hours per day`,
+               while_working = `While working`,
+               fav_genre = `Fav genre`,
+               foreign_languages = `Foreign languages`,
+               music_effects = `Music effects`,
+               Classical = `Frequency [Classical]`,
+               Country = `Frequency [Country]`,
+               EDM = `Frequency [EDM]`,
+               Folk = `Frequency [Folk]`,
+               Gospel = `Frequency [Gospel]`,
+               `Hip Hop` = `Frequency [Hip hop]`,
+               Jazz = `Frequency [Jazz]`,
+               `K-Pop` = `Frequency [K pop]`,
+               Latin = `Frequency [Latin]`,
+               Lofi = `Frequency [Lofi]`,
+               Metal = `Frequency [Metal]`,
+               Pop = `Frequency [Pop]`,
+               `R&B` = `Frequency [R&B]`,
+               Rap = `Frequency [Rap]`,
+               Rock = `Frequency [Rock]`,
+               `Video Game` = `Frequency [Video game music]`) |>
+  select(-Permissions) |> 
+  mutate(music_improve = recode(music_effects, 
+                                'Improve'= '1', 
+                                'No effect'='0', 
+                                'Worsen' = '-1')) |>
+  mutate(music_improve = as.numeric(music_improve))
+```
 
-Write up outline: ----
 
-Intro
+## Introduction 
 
-  Data (exploratory plots)
+People listen to music for all sorts of reasons.
+
+
+
+
+### Data
+
+The data that is used in this exploratory analysis comes from [Kaggle](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download), and contains self-reported survey responses from 736 participants. The data was collected through an online google form created by Catherine Rasgaitis, an undergraduate student from the University of Washington. The form was posted in various Reddit forums, Discord servers, and social media platforms, as well as posters in public locations such as libraries and parks. Participants of all ages and locations were permitted to take the survey, gathering a final random sample ranging from 10 to 89 years old.
+
+Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. They were also presented with symptoms of Anxiety, Depression, Obsessive Compulsive Disorder (OCD) and Insomnia and asked to rank each disorder on a scale of 0 to 10, 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme. An overview of these reponses for each disorder can be seen in the plot below. 
+
+  
+```{r, echo = F, message = F, warning = F}
+wrangled_data |>  
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+                   names_to = "disorder", 
+                   values_to = "n_symptoms")|>
+  ggplot(aes(x = n_symptoms)) +
+  geom_histogram(aes(fill = disorder), position = "dodge", binwidth = .7) +
+  scale_fill_viridis_d(name = "Disorder") +
+  theme_bw(base_size = 14) +
+  labs(x = "Number of Symptoms",
+       y = "Number of Responses",
+       title = "Self Reported Symptoms")
+```
   
 Research Question
 
 Method
+
+
 
 Results/ general interesting findings 
 
