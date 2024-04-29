@@ -1,0 +1,25 @@
+---
+title: "Write up"
+author: "Hailey Quintavalle"
+format: pdf
+---
+
+
+Write up outline: ----
+
+Intro
+
+  Data (exploratory plots)
+  
+Research Question
+
+Method
+
+Results/ general interesting findings 
+
+Conclusion
+
+
+
+
+
