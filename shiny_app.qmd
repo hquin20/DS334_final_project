@@ -254,9 +254,8 @@ server <- function(input, output, session) {
             axis.title.x = element_text(vjust = -1)) +
       labs(x = "Music Effect",
            y = "Proportion",
-           title = glue::glue("\n\nFigure 2. Comparing Effects of Listening to ",
-                              input$sel_genre, " ", 
-                              input$sel_often))
+           title = glue::glue("\n\nFigure 2. Comparing Effects of ", input$sel_often, " Listening to ",
+                              input$sel_genre, " Music"))
   })
   
   output$sum_table <- renderDataTable({

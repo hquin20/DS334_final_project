@@ -205,7 +205,22 @@ Possible questions:
 ## Exploring Mental Health variables
 
 ```{r}
-ggplot(data = wrangled_data, aes(x = Anxiety)) +
+wrangled_data |>  
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+                   names_to = "disorder", 
+                   values_to = "n_symptoms")|>
+  ggplot(aes(x = n_symptoms)) +
+  geom_histogram(aes(fill = disorder), position = "dodge", binwidth = .7) +
+  scale_fill_viridis_d(name = "Disorder") +
+  theme_bw(base_size = 14) +
+  labs(x = "Number of Symptoms",
+       y = "Number of Responses",
+       title = "Num")
+```
+
+
+```{r}
+ggplot(data = wrangled_data, aes(x = Anxiety)) +   ## this plot but all genres on one plot
   geom_histogram(fill = "orange")
 ```
 
