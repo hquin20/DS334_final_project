@@ -8,7 +8,7 @@
 
 <meta name="author" content="Hailey Quintavalle">
 
-<title>Write up</title>
+<title>Music and Mental Health!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Write up</h1>
+<h1 class="title">Music and Mental Health!</h1>
 </div>
 
 
@@ -67,22 +67,109 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>a one-paragraph abstract, giving a brief description of relevant data and any major findings.</p>
+</section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>People listen to music for all sorts of reasons.</p>
+<p>an introduction section, further introducing the data and giving the questions of interest you will be exploring in your project.</p>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The data that is used in this exploratory analysis comes from Kaggle <a href="https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download" class="uri">https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download</a>, and contains self-reported survey responses from 736 participants. The data was collected through a google form online, recruiting a random sample from all ages, ranging from 10 to 89 years old.</p>
+<p>The data that is used in this exploratory analysis comes from <a href="https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download">Kaggle</a>, and contains self-reported survey responses from 736 participants. The data was collected through an online google form created by Catherine Rasgaitis, an undergraduate student from the University of Washington. The form was posted in various Reddit forums, Discord servers, and social media platforms, as well as posters in public locations such as libraries and parks. Participants of all ages and locations were permitted to take the survey, gathering a final random sample ranging in ages from 10 to 89 years old (<em>M</em> = 25).</p>
+<p>Variables included in the original data set:</p>
+<ul>
+<li><p><code>Timestamp</code>: date and time when form was submitted</p></li>
+<li><p><code>Age</code></p></li>
+<li><p><code>Primary streaming service</code>: choose from options of Apple Music, Pandora, Spotify, YouTube Music, Other streaming service, or do not use a streaming service</p></li>
+<li><p><code>Hours per day</code>: number of hours listened to music per day</p></li>
+<li><p><code>While working</code>: does the respondent listen to music while studying/working?</p></li>
+<li><p><code>Instrumentalist</code>: Does the respondent play an instrument regularly?</p></li>
+<li><p><code>Composer</code>: Does the respondent compose music?</p></li>
+<li><p><code>Fav genre</code>: favorite or top genre</p></li>
+<li><p><code>Exploratory</code>: Does the respondent actively explore new artists/genres?</p></li>
+<li><p><code>Foreign languages</code>: Does the respondent listen to music with lyrics in a language they are not fluent in?</p></li>
+<li><p><code>BPM</code>: beats per minute of favorite genre</p></li>
+<li><p><code>Frequency [Classical]</code>: How frequently the respondent listens to classical music</p></li>
+<li><p><code>Frequency [Country]</code>: How frequently the respondent listens to country music</p></li>
+</ul>
+<p>…</p>
+<ul>
+<li><p><code>Anxiety</code>: Self-reported anxiety on a scale of 0-10</p></li>
+<li><p><code>Depression</code>: Self-reported depression, on a scale of 0-10</p></li>
+<li><p><code>Insomnia</code>: self-reported insomnia, scale of 0-10</p></li>
+<li><p><code>OCD</code>: self-reported obsessive compulsive disorder, 0-10</p></li>
+<li><p><code>Music effects</code>: does music improve/worsen mental health conditions?</p></li>
+</ul>
+<p>Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. They were also presented with symptoms of Anxiety, Depression, Obsessive Compulsive Disorder (OCD) and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.</p>
+<p>Anxiety disorder is a common disorder that affects people of all ages. People with this disorder experience chronic feelings of worry and persistent anxiousness that can affect how they live their day to day lives. Depression is a condition where individuals feel extremely unhappy, and often leads to a lack of interest in their regular routines and activities. Those who struggle with depression experience symptoms effecting their physical health as well, such as changes in sleep and appetite. Obsessive compulsive disorder, or OCD, is a condition that causes people to experience uncontrollable and reoccurring thoughts, or obsessions, that lead to compulsive or repetitive behaviors. Finally, insomnia is considered a sleep disorder that results in a struggle to fall asleep, staying asleep, or get good quality sleep. Individuals experiencing insomnia often have trouble completing daily tasks due to drowsiness and exhaustion throughout the day. All of these disorders are curable able to be treated through medication or the right form of therapy. Anyone struggling with any of these conditions should talk with a medical professional to find the right treatment solution for their symptoms.</p>
+</section>
+<section id="research-question" class="level3">
+<h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
+<p>The primary goal of this analysis is to explore the genres that those who report experiencing symptoms of mental disorders listen to the most. Furthermore, we wish to determine how those listening to these musical genres have viewed the effects of music on their health: has it improved their well being, made it worse, or no effect at all?</p>
+</section>
+</section>
+<section id="visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="visualizations">Visualizations</h2>
+<p>To begin our analysis, we will first look into our demographic of the sample that has participated in the study. Since our analysis is focused around those experiencing symptoms associated with anxiety, depression, insomnia, and OCD, so those who reported no association to any of these disorders will be excluded from our future analysis. From doing this, 10 participants’ responses were removed from our data set. A plot showcasing the distribution of ratings for each disorder can be seen below.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="write_up_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Research Question</p>
-<p>Method</p>
-<p>Results/ general interesting findings</p>
-<p>Conclusion</p>
+<p>From this visual we can see that those who experience anxiety mostly reported a rating around 7, along with those who reported symptoms of depression. The distribution of those reporting symptoms of OCD is skewed right, demonstrating that only a small number of people reported a higher rating of OCD. We can view a similar trend for those reporting symptoms of insomnia, although the distribution is not as strongly skewed as the responses for OCD. A table with the summary statistics for each disorder is shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">disorder</th>
+<th style="text-align: center;">M</th>
+<th style="text-align: center;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Anxiety</td>
+<td style="text-align: center;">5.918</td>
+<td style="text-align: center;">2.726</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Depression</td>
+<td style="text-align: center;">4.862</td>
+<td style="text-align: center;">2.996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Insomnia</td>
+<td style="text-align: center;">3.79</td>
+<td style="text-align: center;">3.078</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">OCD</td>
+<td style="text-align: center;">2.674</td>
+<td style="text-align: center;">2.845</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>explore musical genres?</p>
+<ul>
+<li><p>a section showing relevant visualizations. Keep in mind that you do not need to write this as though it is a “step-by-step” thought-process. Instead, you should include your most interesting visualizations, along with interpretations for each. This section will likely be the longest, and, if you are answering multiple different questions of interest, you might break this section up into subsections.</p>
+<ul>
+<li>optionally, you can reference a Shiny app in this section, perhaps providing static visuals from your app. If you did build a Shiny app for your project, then this section is expected to be shorter than if you did not build a Shiny app. But, you should still describe major findings from the Shiny app.</li>
+</ul></li>
+</ul>
 </section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>a concluding section describing future work that you would complete if you had more time as well as any limitations to your visualizations.</p>
 </section>
 
 </main>
