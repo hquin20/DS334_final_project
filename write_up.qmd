@@ -46,11 +46,13 @@ wrangled_data <- initial_data |> rename(primary_streaming_service = `Primary str
 
 This project aims to explore the frequency that individuals struggling with anxiety, depression, OCD, or insomnia listen to specific music genres. A survey administered online from a student from the University of Washington has gathered responses from over 700 people, gathering information about whether music has improved or worsened the state of individuals' mental health. A Shiny App was created to aid in the exploration of responses, allowing users to choose genre, disorder, minimum number of symptoms reported, and the overall effect music has had on metal health. Findings show many people listening to Rock music overwhelmingly report music improving their mental health, regardless of reported symptoms. Further exploration reveals individuals who listen to video game music frequently report music worsening their mental health. It is important to note that these conclusions are drawn from self-reported data, which is prone to be effected by personal biases and uncontrollable outside variables. 
 
+
+
+
 ## Introduction
 
-an introduction section, further introducing the data and giving the questions of interest you will be exploring in your project.
 
-People listen to music for all sorts of reasons.
+Music is a luxury that all people enjoy one way or another. People listen for a variety of different reasons, often to make oneself feel good, reduce stress, or as a distraction from something happening in their life. Music therapy was created because of the effects music has been shown to have on quality of life through relaxation and comfort. It is a low cost intervention that has been shown to improve mood and decrease anxiety, as well as decrease the pain associated with medical procedures and chronic conditions (Kemper & Danhauer, 2005). In terms of what kinds of music people are listening to experience these benefits, it has been shown that there is little differences between genres of music and the improvement of well being (Baker & Bor, 2008). Instead, the type of music only seems to reflect a person's state of emotional vulnerability at a given time. Included in the data for the present analysis, individuals have reported the extent to which they have listened to a variety of genres and have reported how often they experience symptoms of four different mental disorders: anxiety, depression, OCD, and insomnia. 
 
 Anxiety disorder is a common disorder that affects people of all ages. People with this disorder experience chronic feelings of worry and persistent anxiousness that can affect how they live their day to day lives. Depression is a condition where individuals feel extremely unhappy, and often leads to a lack of interest in their regular routines and activities. Those who struggle with depression experience symptoms effecting their physical health as well, such as changes in sleep and appetite. Obsessive compulsive disorder, or OCD, is a condition that causes people to experience uncontrollable and reoccurring thoughts, or obsessions, that lead to compulsive or repetitive behaviors. Finally, insomnia is considered a sleep disorder that results in a struggle to fall asleep, staying asleep, or get good quality sleep. Individuals experiencing insomnia often have trouble completing daily tasks due to drowsiness and exhaustion throughout the day. All of these disorders are curable able to be treated through medication or the right form of therapy. Anyone struggling with any of these conditions should talk with a medical professional to find the right treatment solution for their symptoms.
 
@@ -59,29 +61,33 @@ Anxiety disorder is a common disorder that affects people of all ages. People wi
 
 The data that is used in this exploratory analysis comes from [Kaggle](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download), and contains self-reported survey responses from 736 participants. The data was collected through an online google form created by Catherine Rasgaitis, an undergraduate student from the University of Washington. The form was posted in various Reddit forums, Discord servers, and social media platforms, as well as posters in public locations such as libraries and parks. Participants of all ages and locations were permitted to take the survey, gathering a final random sample ranging in ages from 10 to 89 years old (*M* = 25).
 
+
+Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. The 16 genres include: classical, country, EDM, folk, gospel, hip hop, jazz, K-pop, latin, lofi, metal, pop, R&R, rap, rock, and video game music. They were also presented with symptoms of Anxiety, Depression, OCD, and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.
+
+
 Variables included in the original data set:
 
--   `Timestamp`: date and time when form was submitted
+-   `Timestamp`: Date and time when form was submitted
 
--   `Age`
+-   `Age`: Age of participant
 
--   `Primary streaming service`: choose from options of Apple Music, Pandora, Spotify, YouTube Music, Other streaming service, or do not use a streaming service
+-   `Primary streaming service`: Choose from options of Apple Music, Pandora, Spotify, YouTube Music, Other streaming service, or do not use a streaming service
 
--   `Hours per day`: number of hours listened to music per day
+-   `Hours per day`: Number of hours listened to music per day
 
--   `While working`: does the respondent listen to music while studying/working?
+-   `While working`: Does the respondent listen to music while studying/working?
 
 -   `Instrumentalist`: Does the respondent play an instrument regularly?
 
 -   `Composer`: Does the respondent compose music?
 
--   `Fav genre`: favorite or top genre
+-   `Fav genre`: Favorite or top genre
 
 -   `Exploratory`: Does the respondent actively explore new artists/genres?
 
 -   `Foreign languages`: Does the respondent listen to music with lyrics in a language they are not fluent in?
 
--   `BPM`: beats per minute of favorite genre
+-   `BPM`: Beats per minute of favorite genre
 
 -   `Frequency [Classical]`: How frequently the respondent listens to classical music
 
@@ -93,22 +99,22 @@ Variables included in the original data set:
 
 -   `Depression`: Self-reported depression, on a scale of 0-10
 
--   `Insomnia`: self-reported insomnia, scale of 0-10
+-   `Insomnia`: Self-reported insomnia, scale of 0-10
 
--   `OCD`: self-reported obsessive compulsive disorder, 0-10
+-   `OCD`: Self-reported obsessive compulsive disorder, 0-10
 
--   `Music effects`: does music improve/worsen mental health conditions?
-
-Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. They were also presented with symptoms of Anxiety, Depression, OCD, and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.
+-   `Music effects`: Does music improve/worsen mental health conditions?
 
 
 ### Research Question
 
 The primary goal of this analysis is to explore the genres that those who report experiencing symptoms of mental disorders listen to the most. Furthermore, we wish to determine how those listening to these musical genres have viewed the effects of music on their health: has it improved their well being, made it worse, or no effect at all?
 
-## Visualizations
+## Analysis
 
-To begin our analysis, we will first look into our demographic of the sample that has participated in the study. Since our analysis is focused around those experiencing symptoms associated with anxiety, depression, insomnia, and OCD, so those who reported no association to any of these disorders will be excluded from our future analysis. From doing this, 10 participants' responses were removed from our data set. A plot showcasing the distribution of ratings for each disorder can be seen below.
+### Explore the Data
+
+To begin our analysis, we will first look into our demographic of the sample that has participated in the study. Since our analysis is focused around those experiencing symptoms associated with anxiety, depression, insomnia, and OCD, those who reported no association to any of these disorders will be excluded from our future analysis. From doing this, 10 participants' responses were removed from our data set. A plot showcasing the distribution of ratings for each disorder can be seen below.
 
 ```{r, echo = F, message = F, warning = F}
 wrangled_data |> mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
@@ -119,13 +125,13 @@ wrangled_data |> mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
   ggplot(aes(x = n_symptoms)) +
   geom_histogram(aes(fill = disorder), position = "dodge", binwidth = .7) +
   scale_fill_viridis_d(name = "Disorder") +
-  theme_bw(base_size = 14) +
+  theme_bw(base_size = 16) +
   labs(x = "Number of Symptoms",
        y = "Number of Responses",
        title = "Self Reported Symptoms")
 ```
 
-From this visual we can see that those who experience anxiety mostly reported a rating around 7, along with those who reported symptoms of depression. The distribution of those reporting symptoms of OCD is skewed right, demonstrating that only a small number of people reported a higher rating of OCD. We can view a similar trend for those reporting symptoms of insomnia, although the distribution is not as strongly skewed as the responses for OCD. A table with the summary statistics for each disorder is shown below.
+From this visual we can see that those who experience anxiety mostly reported a rating around 7, along with those who reported symptoms of depression. The distribution of those reporting symptoms of OCD is skewed right, demonstrating that only a small number of people reported a higher rating of OCD. We can view a similar trend for those reporting symptoms of insomnia, although the distribution is not as strongly skewed as the responses for OCD. A table with the average ratings for each disorder is shown below.
 
 ```{r, echo = F}
 wrangled_data |> mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
@@ -136,12 +142,183 @@ wrangled_data |> mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
   group_by(disorder) |> summarise(M = round(mean(n_symptoms), 2), SD = sd(n_symptoms)) |> pander()
 ```
 
-explore musical genres?
 
--   a section showing relevant visualizations. Keep in mind that you do not need to write this as though it is a “step-by-step” thought-process. Instead, you should include your most interesting visualizations, along with interpretations for each. This section will likely be the longest, and, if you are answering multiple different questions of interest, you might break this section up into subsections.
+It appears that of the disorders displayed in the table, people are, on average, rating anxiety the greatest. This is not surprising, since anxiety is the most common among these conditions. Looking closer at those experiencing these disorders, we can examine how they reported music has affected their mental health, as demonstrated in the plot below.
 
-    -   optionally, you can reference a Shiny app in this section, perhaps providing static visuals from your app. If you did build a Shiny app for your project, then this section is expected to be shorter than if you did not build a Shiny app. But, you should still describe major findings from the Shiny app.
+
+```{r, echo = F}
+wrangled_data |> mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
+  filter(sum_disorder != 0) |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+                   names_to = "disorder", 
+                   values_to = "n_symptoms")|>
+  group_by(disorder) |> 
+  drop_na(music_effects) |>
+  ggplot(aes(x = n_symptoms, y = music_effects)) +
+  geom_boxplot(aes(fill = disorder), alpha = 0.85, linewidth = 0.8) +
+  scale_fill_viridis_d(name = "Disorder") +
+  theme_bw(base_size = 16) +
+  coord_flip() +
+  labs(x = "Rating of Disorder",
+       y = "\nEffect Music has on Mental Health",
+       title = "Rating Disorders with Music Effects")
+```
+
+An interesting trend we can observe in the plot above is that those reporting music worsening their mental health also tend to report a higher rating of depression. One reason for this could be those experiencing more severe symptoms of depression may be more likely to listen to music that reflects how they are feeling, only highlighting the depressive thoughts already circling their mind. This trend among those with depression is not observed for those reporting music improving their mental health or having no effect. Besides this interaction, there seems to be little differences between the effects of music and reported experiences with other disorders. 
+
+### Explore Different Genres
+
+Looking into different genres of music, we will start by exploring which genres people reported as their favorite. The plot below shows the top 5 genres out of the 16 genres people were choosing from. 
+
+```{r echo = F}
+wrangled_data |>
+  mutate(sum_disorder = Anxiety + Depression + OCD + Insomnia) |>
+  filter(sum_disorder != 0) |>
+  group_by(fav_genre) |>
+  summarise(n = n()) |>
+  filter(n >= 40) |>
+ggplot(aes(x = fct_reorder(fav_genre, -n), y = n)) +
+  geom_col(aes(fill = fav_genre)) +
+  scale_fill_viridis_d() + 
+  theme_bw(base_size = 14) +
+  theme(legend.position = "none") +
+  labs(x = "\nFavorite Genre",
+       y = "Number of Responses",
+       title = "Top 5 Favorite Genres")
+```
+
+The overwhelming favorite genre is rock music, followed by pop music, metal, classical, and video game music. Let take a deeper dive into some of these genres to see if there are any differences to be found between reported disorder and music's effect on mental health. 
+
+Since rock music seems to be the top genre voted by participants, our analysis will dive deeper into this genre. The next few plots are taken from a Shiny App that was created to aid in the exploration of this data. 
+
+```{r echo = F}
+wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
+                              names_to = "genres", 
+                              values_to = "genre_listen") |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+               names_to = "disorder", 
+               values_to = "n_symptoms") |>
+  mutate(n_symptoms = as.numeric(n_symptoms)) |>
+  filter(music_effects == "Improve",
+         disorder == "Anxiety",
+         genres == "Rock",
+         n_symptoms >= 1) |>
+  group_by(genre_listen) |>
+  summarise(n = n()) |>
+  ggplot(aes(x = genre_listen, y = n)) +
+  geom_col(aes(fill = genre_listen)) +
+  scale_fill_viridis_d() +
+  theme_bw(base_size = 16) +
+  theme(legend.position = "none",
+        axis.title.x = element_text(vjust = -1)) +
+  labs(x = "How often do you listen to rock music?",
+       y = "Number of Responses",
+       title = "Reported Music IMPROVED Mental Health")
+```
+
+The plot above contains responses from those who reported music **improving** their overall mental health and reported experiencing symptoms of **anxiety**. The bars represent the answers of participants when asked how often they generally listened to rock music. It can be observed that most people included in this category listen to rock music very frequently. On the other hand, the next plot demonstrates the answers of those who experience anxiety but report music to have overall **worsened** their mental health. 
+
+
+```{r echo = F}
+wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
+                              names_to = "genres", 
+                              values_to = "genre_listen") |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+               names_to = "disorder", 
+               values_to = "n_symptoms") |>
+  mutate(n_symptoms = as.numeric(n_symptoms)) |>
+  filter(music_effects == "Worsen",
+         disorder == "Anxiety",
+         genres == "Rock",
+         n_symptoms >= 1) |>
+  group_by(genre_listen) |>
+  summarise(n = n()) |>
+  ggplot(aes(x = genre_listen, y = n)) +
+  geom_col(aes(fill = genre_listen)) +
+  scale_fill_viridis_d() +
+  theme_bw(base_size = 16) +
+  theme(legend.position = "none",
+        axis.title.x = element_text(vjust = -1)) +
+  labs(x = "How often do you listen to rock music?",
+       y = "Number of Responses",
+       title = "Reported Music WORSENED Mental Health")
+```
+
+The main difference that can be seen between the two previous visuals occurs within those who reported never listening to rock music. It appears that there are a greater amount of people in this group who have never listened to rock music than in the group who reported music being beneficial towards their mental health. It is important to acknowledge that the number of people who reported music worsening their mental health and never listening to rock music is small, and we should be careful when making conclusions. 
+
+The next visualization demonstrates the differences between these two groups more clearly, and assess if there really are differences between these two groups. 
+
+```{r echo = F, message = F, warning = F}
+
+freq <- wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
+                                         'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
+                                       names_to = "genres", 
+                                       values_to = "genre_listen") |>
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+               names_to = "disorder", 
+               values_to = "n_symptoms") |>
+  mutate(n_symptoms = as.numeric(n_symptoms)) |>
+  filter(disorder == "Anxiety",
+         genres == "Rock",
+         n_symptoms >= 1,
+         genre_listen == "Never" | genre_listen == "Very frequently") |>
+  group_by(music_effects, genre_listen) |>
+  drop_na(music_effects) |>
+  summarise(n = n()) |>
+  ungroup() |>
+  mutate(prop = ifelse(genre_listen == "Never",
+                       n / sum(n[genre_listen == "Never"]), 
+                       n / sum(n[genre_listen == "Very frequently"])))
+
+
+
+ggplot(data = freq, aes(x = music_effects, y = prop, color = genre_listen)) +
+  geom_point(size = 3) + 
+ geom_line(aes(group = genre_listen), linewidth = 1.4) +
+  scale_color_manual(name = "Frequency", 
+                     values = c("Never" = "purple4", "Very frequently" = "cyan4"),
+                     labels = c("Never", "Very frequently")) +
+  theme_bw(base_size = 16) +
+  theme(axis.title.x = element_text(vjust = -1)) +
+  labs(x = "Music Effect",
+       y = "Proportion of Responses", 
+       title = "Frequency of Listening to Rock Music")
+```
+
+In this plot, the blue line represents those who reported listening to rock music very frequently and the purple line represents those who reported never listening to rock music. This plot also uses proportion of responses instead of number of responses to allow for better comparisons. The differences between each of the reported music effects is small, but we can see that those who listen to rock music frequently are more likely to say music has no effect on their mental health overall, and those who never listen to rock music are reporting improvement or worse effects slightly more than those who report frequent listening. 
+
 
 ## Conclusion
 
 a concluding section describing future work that you would complete if you had more time as well as any limitations to your visualizations.
+
+Overall, we can conclude that 
+
+
+
+This analysis investigates the relationship of those experiencing anxiety and listen to rock music, but using the Shiny App that was created for this project allows users to investigate other disorders and the other genres as well. 
+
+Other intersting findings include
+
+
+### Limitations
+
+
+
+
+## References
+
+1. Baker F. & Bor W. (2008). Can Music Preference Indicate Mental Health Status in Young People? *Australasian Psychiatry*. 16(4), 284-288. doi:10.1080/10398560701879589
+
+2. Kemper, K. J., & Danhauer, S. C. (2005). Music as Therapy. *Southern Medical Journal*, 98(3), 282–288. https://doi.org/10.1097/01.smj.0000154773.11986.39 
+
+
+
+
+
+
+
+
+

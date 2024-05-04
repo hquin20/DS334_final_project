@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,7 +65,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
@@ -73,25 +75,25 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>an introduction section, further introducing the data and giving the questions of interest you will be exploring in your project.</p>
-<p>People listen to music for all sorts of reasons.</p>
+<p>Music is a luxury that all people enjoy one way or another. People listen for a variety of different reasons, often to make oneself feel good, reduce stress, or as a distraction from something happening in their life. Music therapy was created because of the effects music has been shown to have on quality of life through relaxation and comfort. It is a low cost intervention that has been shown to improve mood and decrease anxiety, as well as decrease the pain associated with medical procedures and chronic conditions (Kemper &amp; Danhauer, 2005). In terms of what kinds of music people are listening to experience these benefits, it has been shown that there is little differences between genres of music and the improvement of well being (Baker &amp; Bor, 2008). Instead, the type of music only seems to reflect a person’s state of emotional vulnerability at a given time. Included in the data for the present analysis, individuals have reported the extent to which they have listened to a variety of genres and have reported how often they experience symptoms of four different mental disorders: anxiety, depression, OCD, and insomnia.</p>
 <p>Anxiety disorder is a common disorder that affects people of all ages. People with this disorder experience chronic feelings of worry and persistent anxiousness that can affect how they live their day to day lives. Depression is a condition where individuals feel extremely unhappy, and often leads to a lack of interest in their regular routines and activities. Those who struggle with depression experience symptoms effecting their physical health as well, such as changes in sleep and appetite. Obsessive compulsive disorder, or OCD, is a condition that causes people to experience uncontrollable and reoccurring thoughts, or obsessions, that lead to compulsive or repetitive behaviors. Finally, insomnia is considered a sleep disorder that results in a struggle to fall asleep, staying asleep, or get good quality sleep. Individuals experiencing insomnia often have trouble completing daily tasks due to drowsiness and exhaustion throughout the day. All of these disorders are curable able to be treated through medication or the right form of therapy. Anyone struggling with any of these conditions should talk with a medical professional to find the right treatment solution for their symptoms.</p>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The data that is used in this exploratory analysis comes from <a href="https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download">Kaggle</a>, and contains self-reported survey responses from 736 participants. The data was collected through an online google form created by Catherine Rasgaitis, an undergraduate student from the University of Washington. The form was posted in various Reddit forums, Discord servers, and social media platforms, as well as posters in public locations such as libraries and parks. Participants of all ages and locations were permitted to take the survey, gathering a final random sample ranging in ages from 10 to 89 years old (<em>M</em> = 25).</p>
+<p>Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. The 16 genres include: classical, country, EDM, folk, gospel, hip hop, jazz, K-pop, latin, lofi, metal, pop, R&amp;R, rap, rock, and video game music. They were also presented with symptoms of Anxiety, Depression, OCD, and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.</p>
 <p>Variables included in the original data set:</p>
 <ul>
-<li><p><code>Timestamp</code>: date and time when form was submitted</p></li>
-<li><p><code>Age</code></p></li>
-<li><p><code>Primary streaming service</code>: choose from options of Apple Music, Pandora, Spotify, YouTube Music, Other streaming service, or do not use a streaming service</p></li>
-<li><p><code>Hours per day</code>: number of hours listened to music per day</p></li>
-<li><p><code>While working</code>: does the respondent listen to music while studying/working?</p></li>
+<li><p><code>Timestamp</code>: Date and time when form was submitted</p></li>
+<li><p><code>Age</code>: Age of participant</p></li>
+<li><p><code>Primary streaming service</code>: Choose from options of Apple Music, Pandora, Spotify, YouTube Music, Other streaming service, or do not use a streaming service</p></li>
+<li><p><code>Hours per day</code>: Number of hours listened to music per day</p></li>
+<li><p><code>While working</code>: Does the respondent listen to music while studying/working?</p></li>
 <li><p><code>Instrumentalist</code>: Does the respondent play an instrument regularly?</p></li>
 <li><p><code>Composer</code>: Does the respondent compose music?</p></li>
-<li><p><code>Fav genre</code>: favorite or top genre</p></li>
+<li><p><code>Fav genre</code>: Favorite or top genre</p></li>
 <li><p><code>Exploratory</code>: Does the respondent actively explore new artists/genres?</p></li>
 <li><p><code>Foreign languages</code>: Does the respondent listen to music with lyrics in a language they are not fluent in?</p></li>
-<li><p><code>BPM</code>: beats per minute of favorite genre</p></li>
+<li><p><code>BPM</code>: Beats per minute of favorite genre</p></li>
 <li><p><code>Frequency [Classical]</code>: How frequently the respondent listens to classical music</p></li>
 <li><p><code>Frequency [Country]</code>: How frequently the respondent listens to country music</p></li>
 </ul>
@@ -99,26 +101,31 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p><code>Anxiety</code>: Self-reported anxiety on a scale of 0-10</p></li>
 <li><p><code>Depression</code>: Self-reported depression, on a scale of 0-10</p></li>
-<li><p><code>Insomnia</code>: self-reported insomnia, scale of 0-10</p></li>
-<li><p><code>OCD</code>: self-reported obsessive compulsive disorder, 0-10</p></li>
-<li><p><code>Music effects</code>: does music improve/worsen mental health conditions?</p></li>
+<li><p><code>Insomnia</code>: Self-reported insomnia, scale of 0-10</p></li>
+<li><p><code>OCD</code>: Self-reported obsessive compulsive disorder, 0-10</p></li>
+<li><p><code>Music effects</code>: Does music improve/worsen mental health conditions?</p></li>
 </ul>
-<p>Within the survey, people were asked to rate how much they listen to 16 different music genres by selecting Never, Rarely, Sometimes, or Very Frequently. They were also presented with symptoms of Anxiety, Depression, OCD, and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.</p>
 </section>
 <section id="research-question" class="level3">
 <h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
 <p>The primary goal of this analysis is to explore the genres that those who report experiencing symptoms of mental disorders listen to the most. Furthermore, we wish to determine how those listening to these musical genres have viewed the effects of music on their health: has it improved their well being, made it worse, or no effect at all?</p>
 </section>
 </section>
-<section id="visualizations" class="level2">
-<h2 class="anchored" data-anchor-id="visualizations">Visualizations</h2>
-<p>To begin our analysis, we will first look into our demographic of the sample that has participated in the study. Since our analysis is focused around those experiencing symptoms associated with anxiety, depression, insomnia, and OCD, so those who reported no association to any of these disorders will be excluded from our future analysis. From doing this, 10 participants’ responses were removed from our data set. A plot showcasing the distribution of ratings for each disorder can be seen below.</p>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<section id="explore-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="explore-the-data">Explore the Data</h3>
+<p>To begin our analysis, we will first look into our demographic of the sample that has participated in the study. Since our analysis is focused around those experiencing symptoms associated with anxiety, depression, insomnia, and OCD, those who reported no association to any of these disorders will be excluded from our future analysis. From doing this, 10 participants’ responses were removed from our data set. A plot showcasing the distribution of ratings for each disorder can be seen below.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="write_up_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>From this visual we can see that those who experience anxiety mostly reported a rating around 7, along with those who reported symptoms of depression. The distribution of those reporting symptoms of OCD is skewed right, demonstrating that only a small number of people reported a higher rating of OCD. We can view a similar trend for those reporting symptoms of insomnia, although the distribution is not as strongly skewed as the responses for OCD. A table with the summary statistics for each disorder is shown below.</p>
+</div>
+<p>From this visual we can see that those who experience anxiety mostly reported a rating around 7, along with those who reported symptoms of depression. The distribution of those reporting symptoms of OCD is skewed right, demonstrating that only a small number of people reported a higher rating of OCD. We can view a similar trend for those reporting symptoms of insomnia, although the distribution is not as strongly skewed as the responses for OCD. A table with the average ratings for each disorder is shown below.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -159,17 +166,85 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p>explore musical genres?</p>
-<ul>
-<li><p>a section showing relevant visualizations. Keep in mind that you do not need to write this as though it is a “step-by-step” thought-process. Instead, you should include your most interesting visualizations, along with interpretations for each. This section will likely be the longest, and, if you are answering multiple different questions of interest, you might break this section up into subsections.</p>
-<ul>
-<li>optionally, you can reference a Shiny app in this section, perhaps providing static visuals from your app. If you did build a Shiny app for your project, then this section is expected to be shorter than if you did not build a Shiny app. But, you should still describe major findings from the Shiny app.</li>
-</ul></li>
-</ul>
+<p>It appears that of the disorders displayed in the table, people are, on average, rating anxiety the greatest. This is not surprising, since anxiety is the most common among these conditions. Looking closer at those experiencing these disorders, we can examine how they reported music has affected their mental health, as demonstrated in the plot below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>An interesting trend we can observe in the plot above is that those reporting music worsening their mental health also tend to report a higher rating of depression. One reason for this could be those experiencing more severe symptoms of depression may be more likely to listen to music that reflects how they are feeling, only highlighting the depressive thoughts already circling their mind. This trend among those with depression is not observed for those reporting music improving their mental health or having no effect. Besides this interaction, there seems to be little differences between the effects of music and reported experiences with other disorders.</p>
+</section>
+<section id="explore-different-genres" class="level3">
+<h3 class="anchored" data-anchor-id="explore-different-genres">Explore Different Genres</h3>
+<p>Looking into different genres of music, we will start by exploring which genres people reported as their favorite. The plot below shows the top 5 genres out of the 16 genres people were choosing from.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The overwhelming favorite genre is rock music, followed by pop music, metal, classical, and video game music. Let take a deeper dive into some of these genres to see if there are any differences to be found between reported disorder and music’s effect on mental health.</p>
+<p>Since rock music seems to be the top genre voted by participants, our analysis will dive deeper into this genre. The next few plots are taken from a Shiny App that was created to aid in the exploration of this data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot above contains responses from those who reported music <strong>improving</strong> their overall mental health and reported experiencing symptoms of <strong>anxiety</strong>. The bars represent the answers of participants when asked how often they generally listened to rock music. It can be observed that most people included in this category listen to rock music very frequently. On the other hand, the next plot demonstrates the answers of those who experience anxiety but report music to have overall <strong>worsened</strong> their mental health.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The main difference that can be seen between the two previous visuals occurs within those who reported never listening to rock music. It appears that there are a greater amount of people in this group who have never listened to rock music than in the group who reported music being beneficial towards their mental health. It is important to acknowledge that the number of people who reported music worsening their mental health and never listening to rock music is small, and we should be careful when making conclusions.</p>
+<p>The next visualization demonstrates the differences between these two groups more clearly, and assess if there really are differences between these two groups.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'music_effects'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="write_up_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this plot, the <em>blue</em> line represents those who reported listening to rock music <strong>very frequently</strong> and the <em>purple</em> line represents those who reported <strong>never</strong> listening to rock music. This plot also uses proportion of responses instead of number of responses to allow for better comparisons. The differences between each of the reported music effects is small, but we can see that those who listen to rock music frequently are more likely to say music has no effect on their mental health overall, and those who never listen to rock music are reporting improvement or worse effects slightly more than those who report frequent listening.</p>
+</section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>a concluding section describing future work that you would complete if you had more time as well as any limitations to your visualizations.</p>
+<p>Overall, we can conclude that</p>
+<p>This analysis investigates the relationship of those experiencing anxiety and listen to rock music, but using the Shiny App that was created for this project allows users to investigate other disorders and the other genres as well.</p>
+<p>Other intersting findings include</p>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><p>Baker F. &amp; Bor W. (2008). Can Music Preference Indicate Mental Health Status in Young People? <em>Australasian Psychiatry</em>. 16(4), 284-288. doi:10.1080/10398560701879589</p></li>
+<li><p>Kemper, K. J., &amp; Danhauer, S. C. (2005). Music as Therapy. <em>Southern Medical Journal</em>, 98(3), 282–288. https://doi.org/10.1097/01.smj.0000154773.11986.39</p></li>
+</ol>
 </section>
 
 </main>
@@ -253,10 +328,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -266,8 +358,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -279,7 +380,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -323,6 +547,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -348,6 +573,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -408,6 +659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -168,7 +168,7 @@ ui <- fluidPage(
                   1, 10, 5),
       selectInput("sel_genre", 
                   "Select Genre",
-                  c("Classical", "Country", "EDM", "Folk", "Gospel", "Hip Hop", "Jazz", 'K-Pop', "Latin", "Lofi", "Metal", "Pop", 'R&B', "Rap", "Rock", 'Video Game', 'All')),
+                  c("Classical", "Country", "EDM", "Folk", "Gospel", "Hip Hop", "Jazz", 'K-Pop', "Latin", "Lofi", "Metal", "Pop", 'R&B', "Rap", "Rock", 'Video Game')),
       radioButtons("sel_improve",                                   ## figure out how to do All genres
                    "How has music effected your mental health?",
                    c("Improve", "Worsen", "No effect")),
@@ -253,7 +253,7 @@ server <- function(input, output, session) {
       theme(legend.position = "none",
             axis.title.x = element_text(vjust = -1)) +
       labs(x = "Music Effect",
-           y = "Proportion",
+           y = "Proportion of Responses",
            title = glue::glue("\n\nFigure 2. Comparing Effects of ", input$sel_often, " Listening to ",
                               input$sel_genre, " Music"))
   })
@@ -328,7 +328,7 @@ wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`
   theme(legend.position = "none",
         axis.title.x = element_text(vjust = -1)) +
   labs(x = "Music Effect",
-       y = "Proportion")
+       y = "Proportion of Responses")
 ```
 
 

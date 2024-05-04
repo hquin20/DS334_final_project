@@ -204,20 +204,6 @@ Possible questions:
 
 ## Exploring Mental Health variables
 
-```{r}
-wrangled_data |>  
-  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
-                   names_to = "disorder", 
-                   values_to = "n_symptoms")|>
-  ggplot(aes(x = n_symptoms)) +
-  geom_histogram(aes(fill = disorder), position = "dodge", binwidth = .7) +
-  scale_fill_viridis_d(name = "Disorder") +
-  theme_bw(base_size = 14) +
-  labs(x = "Number of Symptoms",
-       y = "Number of Responses",
-       title = "Num")
-```
-
 
 ```{r}
 ggplot(data = wrangled_data, aes(x = Anxiety)) +   ## this plot but all genres on one plot
@@ -240,7 +226,19 @@ ggplot(data = wrangled_data, aes(x = OCD)) +
   geom_histogram(fill = "pink")
 ```
 
-
+```{r}
+wrangled_data |>  
+  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
+                   names_to = "disorder", 
+                   values_to = "n_symptoms")|>
+  ggplot(aes(x = n_symptoms)) +
+  geom_histogram(aes(fill = disorder), position = "dodge", binwidth = .7) +
+  scale_fill_viridis_d(name = "Disorder") +
+  theme_bw(base_size = 14) +
+  labs(x = "Number of Symptoms",
+       y = "Number of Responses",
+       title = "Self Reported Symptoms")
+```
 
 ## Look into demographic around music
 
@@ -256,14 +254,27 @@ ggplot(data = wrangled_data, aes(x = primary_streaming_service, y = Age, color =
 ```
 
 ```{r}
-ggplot(data = wrangled_data, aes(x = fav_genre, y = Age)) +
-  geom_boxplot() +
-  coord_flip()
+ggplot(data = drop_na(wrangled_data), aes(x = fct_reorder(fav_genre, Age), y = Age)) +
+  geom_boxplot(aes(fill = fav_genre)) +
+  coord_flip() +
+  scale_fill_viridis_d() + 
+  theme_bw() +
+  theme(legend.position = "none")
 ```
 
 ```{r}
-ggplot(data = wrangled_data, aes(x = hours_per_day, y = Age)) +
-  geom_point()
+wrangled_data |>
+  group_by(fav_genre) |>
+  summarise(n = n()) |>
+  filter(n >= 40) |>
+ggplot(aes(x = fct_reorder(fav_genre, -n), y = n)) +
+  geom_col(aes(fill = fav_genre)) +
+  scale_fill_viridis_d() + 
+  theme_bw(base_size = 14) +
+  theme(legend.position = "none") +
+  labs(x = "\nFavorite Genre",
+       y = "Number of Responses",
+       title = "Top 5 Favorite Genres")
 ```
 
 ```{r}
