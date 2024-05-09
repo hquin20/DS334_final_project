@@ -4,7 +4,7 @@ This project aims to explore the frequency that individuals struggling with anxi
 
 ## Data
 
-The data used in this project comes from a student from the University of Washington, uploaded to [Kaggle](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download). 
+The data used in this project comes from an undergraduate student from the University of Washington, uploaded to [Kaggle](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download). 
 
 The online survey obtained responses from 736 people, gathering information about whether music has improved or worsened the state of individuals’ mental health. Within the survey, people were asked to rate how much they listen to 16 different music genres and were also presented with symptoms of Anxiety, Depression, OCD, and Insomnia and asked to rank each disorder on a scale of 0 to 10; 0 representing not having experienced this disorder at all and 10 representing having experienced this disorder regularly or to an extreme.
 
