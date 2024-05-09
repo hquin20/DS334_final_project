@@ -2,7 +2,7 @@
 
 This project aims to explore the frequency that individuals struggling with anxiety, depression, OCD, or insomnia listen to specific music genres, and to determine if those who listen believe music had effected their overall mental health. 
 
-### Data
+## Data
 
 The data used in this project comes from a student from the University of Washington, uploaded to [Kaggle](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results?resource=download). 
 
