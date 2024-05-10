@@ -30,9 +30,9 @@ users to choose genre, disorder, minimum number of symptoms reported,
 and the overall effect music has had on metal health.
 
 The app produces a number of plots similar to the one below. This plot
-contains the reported frequency of listening to **rock** music of those
-who have experienced **anxiety** symptoms and say music has **improved**
-their mental health.
+contains the reported frequency of listening to ***rock*** music of
+those who have experienced ***anxiety*** symptoms and say music has
+***improved*** their mental health.
 
 ![](README_files/figure-commonmark/unnamed-chunk-2-1.png)
 

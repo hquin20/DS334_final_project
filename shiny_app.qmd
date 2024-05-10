@@ -5,7 +5,7 @@ format: html
 ---
 
 
-```{r message = F}
+```{r message = F, warning = F}
 library(tidyverse)
 initial_data <- read_csv("data/mxmh_survey_results.csv")
 ```
@@ -142,20 +142,11 @@ numeric_music <- wrangled_data |>
   
 ```
 
-plan: filter by those who said they felt symptoms of [anxiety] AND said that music had improved their mental health --> then find which genres that group listens to the most 
-
---> shiny app ideas: 
-
-- choose disorder from select input 
-
-- slider for number of symptoms someone experiences of that disorder? 
-
-- change improvement option from Improve to Worsen with radio buttons - observe the opposite effects
-
 
 ```{r}
 library(plotly)
 library(shiny)
+library(tidyverse)
 
 ui <- fluidPage(
   sidebarLayout(
@@ -262,98 +253,12 @@ server <- function(input, output, session) {
     
     wrangled_data |> select(-c(Timestamp, Classical, Country, EDM, Folk, Gospel, `Hip Hop`,
                                Jazz, `K-Pop`, Latin, Lofi, Metal, Pop, `R&B`, Rap, Rock, `Video Game`,
-                               music_improve))  ## add text so we have a title for this table 
+                               music_improve))
   })
   
 }
 
 shinyApp(ui, server)
 ```
-
-
-
-```{r}
-plot_demo <- wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
-                 'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
-               names_to = "genres", 
-               values_to = "genre_listen") |>
-  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
-               names_to = "disorder", 
-               values_to = "n_symptoms") |>
-  mutate(n_symptoms = as.numeric(n_symptoms)) |>
-  filter(music_effects == "Improve",
-         disorder == "Depression",
-         genres == "Classical",
-         n_symptoms >= 7) |>
-  group_by(genre_listen) |>
-  summarise(n = n()) |>
-  ggplot(aes(x = genre_listen, y = n)) +
-  geom_col(aes(fill = genre_listen), color = "black", linewidth = 0.8) +
-  scale_fill_viridis_d() +
-  theme_minimal(base_size = 16) +
-  theme(legend.position = "none",
-        axis.title.x = element_text(vjust = -1)) +
-  labs(x = "How often do you listen to [this genre]?",
-       y = "Number of Responses")
-
-ggplotly(plot_demo, tooltip = "y")
-```
-
-
-potentially add: line plot that compares worsen to improve to no effect of each: never, some, frequently, etc. 
-
-
-```{r}
-wrangled_data |> pivot_longer(c(Classical, Country, EDM, Folk, Gospel, `Hip Hop`, Jazz, 
-                                'K-Pop', Latin, Lofi, Metal, Pop, 'R&B', Rap, Rock, 'Video Game'),
-                              names_to = "genres", 
-                              values_to = "genre_listen") |>
-  pivot_longer(c(Anxiety, Depression, Insomnia, OCD), 
-               names_to = "disorder", 
-               values_to = "n_symptoms") |>
-  mutate(n_symptoms = as.numeric(n_symptoms)) |>
-  filter(disorder == "Anxiety",
-         genres == "Classical",
-         n_symptoms >= 7,
-         genre_listen == "Never") |>
-  group_by(music_effects) |>
-  summarise(n = n()) |>
-  drop_na() |>
-  mutate(sum = sum(n),
-         prop = round(n / sum, 2)) |>
-   ggplot(aes(x = music_effects, y = prop, group = 1)) +
-  geom_point(size = 3) +
-  geom_line(linewidth = 1) +                         ## connect dots with line 
-  theme_minimal(base_size = 16) +
-  theme(legend.position = "none",
-        axis.title.x = element_text(vjust = -1)) +
-  labs(x = "Music Effect",
-       y = "Proportion of Responses")
-```
-
-
-```{r}
- wrangled_data |> select(-c(Timestamp, Classical, Country, EDM, Folk, Gospel, `Hip Hop`,
-                               Jazz, `K-Pop`, Latin, Lofi, Metal, Pop, `R&B`, Rap, Rock, `Video Game`,
-                               music_improve))
-```
-
-
-Need to:
-
-- add title to table
-
-- change variable names so they are cleaner OR add descriptions of each variable as text in the shiny app
-
-- start write up
-
-
-
-
-
-
-
-
-
 
 
