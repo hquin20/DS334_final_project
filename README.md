@@ -36,11 +36,11 @@ their mental health.
 
 ![](README_files/figure-commonmark/unnamed-chunk-2-1.png)
 
-Overall findings suggest people frequently listening to rock music
-report it improving their mental health, regardless of reported
-symptoms. Further exploration of the Shiny App also reveals more
-individuals who listen to video game music frequently *and* have
-experienced depression report music worsening their mental health.
+Findings suggest that people frequently listening to rock music report
+music improving their mental health, regardless of reported symptoms.
+Further exploration of the Shiny App also reveals more individuals who
+listen to video game music frequently *and* have experienced depression
+report music worsening their mental health.
 
 It is important to note that these conclusions are drawn from
 self-reported data, which is prone to be effected by personal biases and
