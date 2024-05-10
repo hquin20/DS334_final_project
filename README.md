@@ -25,9 +25,9 @@ experienced this disorder regularly or to an extreme.
 
 ### Results
 
-A Shiny App was created to aid in the exploration of responses, allowing
-users to choose genre, disorder, minimum number of symptoms reported,
-and the overall effect music has had on metal health.
+A Shiny App was created to aid in the exploration of survey responses,
+allowing users to choose genre, disorder, minimum number of symptoms
+reported, and the overall effect music has had on metal health.
 
 The app produces a number of plots similar to the one below. This plot
 contains the reported frequency of listening to ***rock*** music of
