@@ -1,14 +1,14 @@
 # DATA 334 Final Project
 
 
-# **Music and Mental Health!**
+## **Music and Mental Health!**
 
 This project aims to explore the frequency that individuals struggling
 with anxiety, depression, OCD, or insomnia listen to specific music
 genres, and to determine if those who listen believe music had effected
 their overall mental health.
 
-## Data
+### Data
 
 The data used in this project comes from an undergraduate student from
 the University of Washington, uploaded to
@@ -23,7 +23,7 @@ asked to rank each disorder on a scale of 0 to 10; 0 representing not
 having experienced this disorder at all and 10 representing having
 experienced this disorder regularly or to an extreme.
 
-## Results
+### Results
 
 A Shiny App was created to aid in the exploration of responses, allowing
 users to choose genre, disorder, minimum number of symptoms reported,
